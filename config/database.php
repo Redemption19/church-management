@@ -1,6 +1,6 @@
 <?php
 
-$DATABASE_URL=parse_url('DATABASE_URL');
+$DATABASE_URL = parse_url(env('DATABASE_URL'));
 return [
     
 
@@ -63,11 +63,11 @@ return [
 
         'pgsql' => [
             'driver' => 'pgsql',
-            'host' => $DATABASE_URL["host"],
-            'port' => $DATABASE_URL["port"],
-            'database' => ltrim($DATABASE_URL["path"],"/"),
-            'username' => $DATABASE_URL["user"],
-            'password' => $DATABASE_URL["pass"],
+            'host' => $DATABASE_URL["host"] ?? null, // Use null coalescing operator to handle undefined index
+            'port' => $DATABASE_URL["port"] ?? null,
+            'database' => ltrim($DATABASE_URL["path"], "/") ?? null,
+            'username' => $DATABASE_URL["user"] ?? null,
+            'password' => $DATABASE_URL["pass"] ?? null,
             'charset' => 'utf8',
             'prefix' => '',
             'schema' => 'public',
