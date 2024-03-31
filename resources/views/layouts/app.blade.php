@@ -19,6 +19,13 @@
 	<!-- <link href="{{ URL::asset('css/demo/nifty-demo-icons.min.css') }}" rel="stylesheet"> -->
 	<!-- PARTICLES -->
 	<link href="{{ URL::asset('css/particles.css') }}" rel="stylesheet">
+    <style>
+        .sidebar-menu .active > a {
+            background-color: #2d8caf;
+            color: #fff; /* Text color */
+        }
+    </style>
+
 	<!-- PARTICLES -->
 
 	@yield('link')
@@ -34,6 +41,25 @@
 	<!-- <link href="{{ URL::asset('css/demo/nifty-demo.min.css') }}" rel="stylesheet"> -->
 	<!--Font Awesome [ OPTIONAL ]-->
 	<link href="{{ URL::asset('css/font-awesome.min.css')}}" rel="stylesheet">
+
+    <style>
+        /* Style for the logout button */
+        #logout-button {
+            background-color: #2d8caf; /* Red background color */
+            color: #fff; /* White text color */
+            border: none; /* No border */
+            padding: 7px 20px; /* Padding for the button */
+            border-radius: 5px; /* Rounded corners */
+            cursor: pointer;
+            margin-left: 20px;
+            margin-top: 30px; /* Cursor style */
+        }
+
+        /* Hover effect for the logout button */
+        #logout-button:hover {
+            background-color: #c82333; /* Darker red on hover */
+        }
+    </style>
 
 	@if (Route::currentRouteName() == 'member.register.form' || Route::currentRouteName() == 'attendance' ||
 	Route::currentRouteName() == 'attendance.mark' || Route::currentRouteName() == 'collection.offering' ||
@@ -150,31 +176,32 @@
 						<!--User dropdown-->
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<li id="dropdown-user" class="dropdown">
-							<a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
-								<span class="ic-user pull-right">
-									<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-									<!--You can use an image instead of an icon.-->
-									<!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
-									<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-									<i class="fa fa-user"> Hello {{\Auth::user()->branchname}}</i>
-								</span>
-								<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-								<!--You can also display a user name in the navbar.-->
-								<!--<div class="username hidden-xs">Aaron Chavez</div>-->
-								<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
-							</a>
-							<div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
-								<ul class="head-list">
-									<li>
-										<form method="POST" action="{{route('logout')}}">
-											@csrf
-											<button type="submit"><i class="demo-pli-unlock icon-lg icon-fw"></i>
-												Logout</button>
-										</form>
-									</li>
-								</ul>
-							</div>
-						</li>
+                            <a href="#" data-toggle="dropdown" class="dropdown-toggle text-right">
+                                <span class="ic-user pull-right">
+                                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                                    <!--You can use an image instead of an icon.-->
+                                    <!--<img class="img-circle img-user media-object" src="img/profile-photos/1.png" alt="Profile Picture">-->
+                                    <!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
+                                    <i class="fa fa-user"> Hello {{\Auth::user()->branchname}}</i>
+                                </span>
+                            </a>
+                            <div class="dropdown-menu dropdown-menu-sm dropdown-menu-right panel-default">
+                                <ul class="head-list">
+                                    <li>
+                                        <!-- Add profile button -->
+                                        <a href=""><i class="fa fa-user-circle icon-lg icon-fw"></i> Profile</a>
+                                    </li>
+                                    <li>
+                                        <form method="POST" action="{{ route('logout') }}">
+                                            @csrf
+                                            <button type="submit">
+                                                <i class="fa fa-sign-out icon-lg icon-fw"></i> Logout
+                                            </button>
+                                        </form>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
 						<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~-->
 						<!--End user dropdown-->
 					</ul>
@@ -381,7 +408,7 @@
 									</li>
 									<!-- @ if (\Auth::user()->isAdmin()) -->
 									<li
-										class="{{Route::currentRouteName() === 'branch.tools' || Route::currentRouteName() === 'branch.options' || Route::currentRouteName() === 'branch.register' || Route::currentRouteName() === 'branches' ? 'active-sub active' : ''}}">
+										class="{{Route::currentRouteName() === 'branch.tools' || Route::currentRouteName() === 'branch.options'  || Route::currentRouteName() === 'admin.systemusers' || Route::currentRouteName() === 'branch.register' || Route::currentRouteName() === 'branches' ? 'active-sub active' : ''}}">
 										<a href="#">
 											<i class="fa fa-building-o"></i>
 											<span class="menu-title">Admin Tools</span>
@@ -407,8 +434,11 @@
 											<li
 												class="{{Route::currentRouteName() === 'branch.options' ? 'active-sub' : ''}}">
 												<a href="{{route('branch.options')}}"><i class="fa fa-cog"></i>
-													Options</a>
+												Options</a>
 											</li>
+                                            <li class="{{ Route::currentRouteName() === 'admin.systemusers' ? 'active-sub' : '' }}">
+                                                <a href="{{ route('admin.systemusers') }}"><i class="fa fa-user"></i> System Users</a>
+                                            </li>
 
 										</ul>
 									</li>
@@ -518,13 +548,12 @@
 								</a>
 								</li>
 								<li>
-									<form id="logout" method="POST" action="{{route('logout')}}">
-										@csrf
-									</form>
-									<a href="#" onclick="$('#logout').submit()">
-										<i class="fa fa-sign-out"></i>
-										<span class="menu-title">Logout</span>
-									</a>
+                                    <form method="POST" action="{{ route('logout') }}">
+                                        @csrf
+                                        <button type="submit" id="logout-button">
+                                            <i class="fa fa-sign-out icon-lg icon-fw"></i> Logout
+                                        </button>
+                                    </form>
 								</li>
 								<!--Menu list item-->
 								<li class="list-divider"></li>
@@ -632,6 +661,28 @@
 	<script src="{{ URL::asset('plugins/datatables/buttons.html5.min.js') }}"></script>
 	<script src="{{ URL::asset('plugins/datatables/buttons.colVis.min.js') }}"></script>
 
+    {{-- <script>
+        function confirmLogout() {
+            console.log("Confirmation dialog triggered"); // Debugging statement
+
+            Swal.fire({
+                title: 'Logout',
+                text: 'Are you sure you want to logout?',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonColor: '#3085d6',
+                cancelButtonColor: '#d33',
+                confirmButtonText: 'Yes, logout!'
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    console.log("User confirmed logout"); // Debugging statement
+                    document.getElementById('logout-form').submit();
+                } else {
+                    console.log("User canceled logout"); // Debugging statement
+                }
+            });
+        }
+    </script> --}}
 	<script>
 		$(document).ready(function () {
 

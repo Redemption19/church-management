@@ -113,7 +113,7 @@ li {
             <div class="col-sm-8 col-sm-offset-2" style="margin-bottom:<?php
             echo (isset($formatted_date)) ? '30' : '60';
             ?>px">
-                <div class="panel rounded-top" style="background-color: #e8ddd3;">
+                <div class="panel rounded-top" style="background-color: #02196e;">
                     <div class="panel-heading text-center">
                         <h3 class="panel-title">Select Attendance To View</h3>
                     </div>
@@ -151,7 +151,7 @@ li {
 
             </div>
             <div class="col-md-offset-1 col-md-10" style="margin-bottom:50px">
-              <div class="panel rounded-top" style="background-color: #e8ddd3;">
+              <div class="panel rounded-top" style="background-color: #f7ba00;">
                 <div class="panel-heading text-center">
                   <h1 class="panel-title">Branch Attendance History<h1>
                 </div>
@@ -165,7 +165,7 @@ li {
                         <th class="min-tablet">Women</th>
                         <th class="min-tablet">Children</th>
                         <th class="min-tablet">Total</th>
-                        <th class="min-tablet">Transaction Date</th>
+                        <th class="min-tablet">Attendance Date/Time</th>
                         <th class="min-tablet">Processed Date</th>
                         <th class="min-desktop">Action</th>
                     </tr>
@@ -367,7 +367,7 @@ function viewMemberAttendance(id, element){
       columns: [
           { title: "Service type", data: 'service_types.name', name: 'service_types.name' },
           { title: "Attendance", data: 'attendance', name: 'attendance' },
-          { title: "Transaction Date", data: 'updated_at', name: 'updated_at' },
+          { title: "Attendance Date/Time", data: 'updated_at', name: 'updated_at' },
           { title: "Processed Date", data: 'date', name: 'date' },
       ],
       dom: 'Bfrtip',

@@ -25,9 +25,34 @@
     <script src="{{ URL::asset('plugins/pace/pace.min.js') }}"></script>
 
   <style type="text/css"> .cls-container {
-     background-image: url("{{ URL::asset('img/reg_bg.jpg') }}");
-     background-color: #cccccc;
+
+     background-color: #2d8caf;
   }
+  .cls-content {
+            align-items: center;
+            background-color: #ffffff;
+            border-radius: 1rem;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            height: 60.1rem;
+            width: 67rem;
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            padding: 1px 6.2rem 9.263rem 6.2rem;
+            overflow: hidden;
+        }
+#img-show-container {
+    max-width: 50%; /* Limit the maximum width of the image container */
+    overflow: hidden; /* Hide any overflow beyond the maximum width */
+}
+
+#img-show {
+    max-width: 50%; /* Limit the maximum width of the image */
+    height: auto; /* Maintain the aspect ratio of the image */
+}
   </style>
 </head>
 
@@ -43,7 +68,7 @@
   <!--===================================================-->
   <div class="cls-content">
     <div class="title m-b-md">
-      <h1 class=" text-light">Setup App</h1>
+      <h1 class="" style="color: #2d8caf;">Setup App</h1>
     </div>
 
     <div class="col-lg-10 col-lg-offset-2">
@@ -62,31 +87,32 @@
     <div class="cls-content-lg panel">
       <div class="panel-body text-light text-bold">
 
-          <form id="setup-form" class="form-horizontal form-padding" enctype="multipart/form-data">
+        <form id="setup-form" class="form-horizontal form-padding" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-              <label class="control-label col-md-3" for="name">Church Name</label>
-              <div class="col-md-9">
-                <input id="name" required class="form-control" type="text" name="name" placeholder="e.g ccc">
-              </div>
+                <label class="control-label col-md-3" for="name" style="color: #2d8caf;">Church Name</label>
+                <div class="col-md-9">
+                    <input id="name" required class="form-control" type="text" name="name" placeholder="e.g Empowerment" style="border-color: #2d8caf;">
+                </div>
             </div>
-          </form>
 
-          <form class="form-horizontal form-padding" action="#" enctype="multipart/form-data">
             <div class="form-group">
-              <div class="col-md-3">
-                <label class="control-label" for="logo">Church Logo</label>
-              </div>
-              <div class="col-md-9">
-                <input required id="logo" class="file-control" type="file" accept="image/*" name="logo[]" >
-              </div>
+                <div class="col-md-3">
+                    <label class="control-label" for="logo" style="color: #2d8caf;">Church Logo</label>
+                </div>
+                <div class="col-md-9">
+                    <input required id="logo" class="file-control" type="file" accept="image/*" name="logo[]" style="border-color: #2d8caf;">
+                </div>
             </div>
-          </form>
-          <div class="image" id="img-show-container" style="display: none">
-            <div class="fa fa-remove blue delete" onclick="resetImgUpl()"></div>
-            <canvas id="img-show" class="img-thumbnail img-response"></canvas>
-          </div>
-          <button id="submit" class="float-right btn btn-primary" type="submit">Submit</button>
+
+            <div class="image" id="img-show-container" style="display: none">
+                <div class="fa fa-remove blue delete" onclick="resetImgUpl()"></div>
+                <canvas id="img-show" class="img-thumbnail img-response"></canvas>
+            </div>
+
+            <button id="submit" class="float-right btn" type="submit" style="background-color: #2d8caf; color: #ffffff;">Submit</button>
+        </form>
+
         </div>
       </div>
 

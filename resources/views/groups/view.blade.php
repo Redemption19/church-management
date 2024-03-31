@@ -67,7 +67,7 @@
         <!-- Line Chart -->
         <!---------------------------------->
         <?php if(isset($members_in_branch)){ ?>
-        <div class="panel"  style="background-color: #e8ddd3;">
+        <div class="panel"  style="background-color: #fff;">
             <div class="panel-heading">
                 <h3 class="panel-title text-center">Add Members To Group</h3>
             </div>

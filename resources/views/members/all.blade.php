@@ -6,6 +6,20 @@
 <link href="{{ URL::asset('plugins/bootstrap-datepicker/bootstrap-datepicker.min.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('css/sweetalert.css') }}" rel="stylesheet">
 <link href="{{ URL::asset('plugins/datatables/media/css/dataTables.bootstrap.css') }}" rel="stylesheet">
+<style>
+    /* Style for the action buttons */
+    .btn-group {
+        display: flex; /* Use flexbox to arrange buttons horizontally */
+        gap: 5px; /* Add space between buttons */
+    }
+
+    /* Style for the buttons */
+    .btn {
+        padding: 5px 10px; /* Smaller padding for buttons */
+        border-radius: 3px; /* Rounded corners */
+        cursor: pointer; /* Cursor style */
+    }
+</style>
 @endsection
 
 @section('content')
@@ -36,7 +50,7 @@
     <div id="page-content">
         <!-- Basic Data Tables -->
         <!--===================================================-->
-        <div class="panel rounded-top" style="background-color: #e8ddd3;">
+        <div class="panel rounded-top" style="background-color: #fff;">
             <div class="panel-heading card-block text-center">
                 <h1 class="panel-title text-primary text-bold">List of Members In {{\Auth::user()->branchname}}</h1>
             </div>
@@ -111,9 +125,9 @@ $(document).ready(function () {
              ' a Full Member"><i class="fa fa-level-up"></i> <i class="fa fa-user"></i></button>' : ''}`)
             },
             // { title: "Marital Status", data: 'marital_status', name: 'marital_status' },
-            { title: "phone Number", data: 'phone', name: 'phone' },
+            { title: "Phone Number", data: 'phone', name: 'phone' },
             { title: "Email", data: 'email', name: 'email' },
-            { title: "Sex", data: 'sex', name: 'sex' },
+            { title: "Gender", data: 'sex', name: 'sex' },
             // { title: "Birthdate", data: 'dob', name: 'dob' },
             // { title: "Member Since", data: 'member_since', name: 'member_since' },
             { title: "Position", data: 'position', name: 'position' },
@@ -123,14 +137,18 @@ $(document).ready(function () {
             // { title: "City", data: 'city', name: 'city' },
             // { title: "Country", data: 'country', name: 'country' },
             // { title: "wedding Anniversary", data: 'wedding_anniversary', name: 'wedding_anniversary' },
-            { title: "Action", data: 'id', name: 'action', render: (id) => (`
-              <div class="btn-group">
-                <button style="background-color:orange" class="btn text-light edit" data-id="${id}"><i class="fa fa-edit"></i></button>
-                <a style="background-color:green" class="btn text-light" href="../member/profile/${id}"><i class="fa fa-eye"></i></a>
-                <a id="${id}" style="background-color:#8c0e0e" class="d-member btn text-light"><i class="fa fa-trash"></i></a>
-              </div>
-              `)
-            },
+            {
+    title: "Action",
+    data: 'id',
+    name: 'action',
+    render: (id) => (`
+        <div class="btn-group">
+            <button style="background-color:#2d8caf" class="btn text-light edit" data-id="${id}"><i class="fa fa-edit"></i></button>
+            <a style="background-color:#9b760d" class="btn text-light" href="../member/profile/${id}"><i class="fa fa-eye"></i></a>
+            <a id="${id}" style="background-color:#dc3545" class="d-member btn text-light"><i class="fa fa-trash"></i></a>
+        </div>
+    `)
+},
         ],
         dom: 'Bfrtip',
         lengthChange: false,

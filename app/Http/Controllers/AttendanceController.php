@@ -6,6 +6,7 @@ use App\Attendance;
 use App\Member;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Auth;
 
 class AttendanceController extends Controller
 {
@@ -76,7 +77,7 @@ class AttendanceController extends Controller
 
     public function showByDate($date){
 
-        $user = \Auth::user();
+        $user = Auth::user();
         $attendance = Attendance::where('attendance_date', $date )->where('branch_id',$user->id )->first();
         if ($attendance)
         {
@@ -98,7 +99,7 @@ class AttendanceController extends Controller
      */
     public function show(Attendance $attendance, Request $request)
     {
-        $user = \Auth::user();
+        $user = Auth::user();
         $attendance = Attendance::where('attendance_date', $request->get('date') )->where('branch_id',$user->id )->first();
         if ($attendance)
         {

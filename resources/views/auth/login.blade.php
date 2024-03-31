@@ -14,6 +14,7 @@
 
     <!--Open Sans Font [ OPTIONAL ]-->
     <link href='https://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 
 
     <!--Bootstrap Stylesheet [ REQUIRED ]-->
@@ -22,6 +23,8 @@
 
     <!--Nifty Stylesheet [ REQUIRED ]-->
     <link href="{{ URL::asset('css/nifty.min.css') }}" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Poppins%3A400%2C500%2C600"/>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro%3A400%2C500%2C600"/>
 
 
     <!--Nifty Premium Icon [ DEMONSTRATION ]-->
@@ -42,36 +45,124 @@
     <link href="{{ URL::asset('css/demo/nifty-demo.min.css') }}" rel="stylesheet">
 
 
-    <!--=================================================
+    <style>
 
-    REQUIRED
-    You must include this in your project.
-
-
-    RECOMMENDED
-    This category must be included but you may modify which plugins or components which should be included in your project.
-
-
-    OPTIONAL
-    Optional plugins. You may choose whether to include it in your project or not.
-
-
-    DEMONSTRATION
-    This is to be removed, used for demonstration purposes only. This category must not be included in your project.
-
-
-    SAMPLE
-    Some script samples which explain how to initialize plugins or components. This category should not be included in your project.
-
-
-    Detailed information and more samples can be found in the document.
-
-    =================================================-->
-    <style type="text/css"> .cls-container {
-   background-image: url("{{ URL::asset('img/Banff2.jpg') }}");
-   background-color: #cccccc;
-        background-size: cover;
+/* Reset CSS */
+html, body {
+    margin: 0;
+    padding: 0;
+    overflow: hidden; /* Prevent scrolling */
 }
+
+.login-content {
+    align-items: center;
+    background-color: #ffffff;
+    border-radius: 1rem;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    height: 60.1rem;
+    width: 49.5rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 1px 6.2rem 9.263rem 6.2rem;
+    overflow: hidden;
+}
+
+
+.background-overlay {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #2d8caf;
+}
+
+.login-content .login-image {
+    width: 200px;
+    height: auto;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.login-title {
+    font-size: 24px;
+    color: #2d8caf;
+    text-align: left;
+    margin-bottom: 20px;
+}
+
+.login-content p {
+    font-size: 16px;
+    color: #2d8caf;
+    text-align: left;
+    margin-bottom: 10px;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+.mar-ver {
+    margin-top: 10px; /* Adjusted margin top */
+    text-align: center;
+}
+
+.pad-btm {
+    padding-bottom: 10px;
+}
+.login-image {
+    display: inline-block;
+    margin-left: 20px; /* Adjusted margin left */
+}
+.form-control {
+    width: 100%;
+    padding: 15px; /* Adjusted padding */
+    border: none;
+    border-radius: 5px;
+    border: solid 0.0688rem #2d8caf;
+    font-size: 1.2rem;
+    font-weight: 500;
+    color: #2d8caf;
+    font-family: Poppins, 'Source Sans Pro';
+}
+
+.checkbox {
+    margin-bottom: 20px;
+}
+
+.checkbox label {
+    font-weight: normal;
+}
+
+.btn-primary {
+    background-color: #2d8caf;
+    color: #ffffff;
+    border: none;
+    border-radius: 0.6875rem;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+}
+
+.btn-primary:hover {
+    background-color: #25769e;
+}
+
+.btn-link {
+    color: #007bff;
+    text-decoration: none;
+}
+
+.btn-link:hover {
+    text-decoration: underline;
+}
+
+
+
+
 </style>
 
 
@@ -81,97 +172,51 @@
 <!--You may remove all ID or Class names which contain "demo-", they are only used for demonstration. -->
 
 <body>
-    <div id="container" class="cls-container">
+    <div class="">
+        <div class="background-overlay"></div>
+        <div class="login-content">
+            <div class="">
+                <div class="">
+                    <div class="mar-ver pad-btm">
+                        <img src="{{ asset('img/emc-logo.png') }}" alt="Image" class="login-image"> <!-- Use the asset helper to include the image -->
+                        <h1 class="login-title">Welcome Back 🤗🤝</h1>
+                        <p>Sign In to your account</p>
+                    </div>
+                    <form method="POST" action="{{ route('login') }}">
+                        @csrf
+                        <div class="form-group">
+                            <input id="email" type="email" placeholder="Email " class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
+                            @if ($errors->has('email'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('email') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="form-group">
+                            <input id="password" type="password" placeholder="Password "  class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
 
-		<!-- BACKGROUND IMAGE -->
-		<!--===================================================-->
-		<div id="bg-overlay"></div>
+                            @if ($errors->has('password'))
+                                <span class="invalid-feedback">
+                                    <strong>{{ $errors->first('password') }}</strong>
+                                </span>
+                            @endif
+                        </div>
+                        <div class="checkbox pad-btm text-left">
+                            <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} >
+                            <label class="font-weight-bold" for="demo-form-checkbox">Remember me</label>
+                        </div>
+                        <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
+                    </form>
 
+                    <div class="pad-all">
+                        <a href="{{ route('password.request') }}" class="btn-link mar-rgt">Forgot password ?</a>
+                    </div>
 
-		<!-- LOGIN FORM -->
-		<!--===================================================-->
-		<div class="cls-content">
-		    <div class="cls-content-sm panel">
-		        <div class="panel-body  bg-warning shadow-lg p-3 mb-5 rounded">
-		            <div class="mar-ver pad-btm">
-		                <h1 class="h3">Account Login</h1>
-		                <p>Sign In to your account</p>
-		            </div>
-		            <form method="POST"  action="{{ route('login') }}">
-                    @csrf
-		                <div class="form-group">
-		                    <input id="email" type="email" Placeholder="Email " class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" name="email" value="{{ old('email') }}" required autofocus>
-							@if ($errors->has('email'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('email') }}</strong>
-                                    </span>
-                                @endif
-		                </div>
-		                <div class="form-group">
-                            <input id="password" type="password" Placeholder="Password "  class="form-control{{ $errors->has('password') ? ' is-invalid' : '' }}" name="password" required>
-
-							@if ($errors->has('password'))
-                                    <span class="invalid-feedback">
-                                        <strong>{{ $errors->first('password') }}</strong>
-                                    </span>
-                                @endif
-		                </div>
-		                <div class="checkbox pad-btm text-left">
-		                    <input id="demo-form-checkbox" class="magic-checkbox" type="checkbox" name="remember" {{ old('remember') ? 'checked' : '' }} >
-		                    <label class="font-weight-bold" for="demo-form-checkbox" style="">Remember me</label>
-		                </div>
-		                <button class="btn btn-primary btn-lg btn-block" type="submit">Sign In</button>
-		            </form>
-
-                <div class="pad-all">
-    		            <a href="{{route('recover')}}" class="btn-link mar-rgt">Forgot password ?</a>
-    		            <!--a href="register" class="btn-link mar-lft">Create a new account</a-->
-
-    		            <!--<div class="media pad-top bord-top">
-    		                <div class="pull-right">
-    		                    <a href="pages-login.html#" class="pad-rgt"><i class="demo-psi-facebook icon-lg text-primary"></i></a>
-    		                    <a href="pages-login.html#" class="pad-rgt"><i class="demo-psi-twitter icon-lg text-info"></i></a>
-    		                    <a href="pages-login.html#" class="pad-rgt"><i class="demo-psi-google-plus icon-lg text-danger"></i></a>
-    		                </div>
-    		                <div class="media-body text-left text-bold text-main">
-    		                    Login with
-    		                </div>
-    		            </div>-->
-    		        </div>
-
-		        </div>
-		    </div>
-		</div>
-		<!--===================================================-->
-
-
-		<!-- DEMO PURPOSE ONLY -->
-		<!--===================================================-->
-		<!--<div class="demo-bg">
-		    <div id="demo-bg-list">
-		        <div class="demo-loading"><i class="psi-repeat-2"></i></div>
-		        <img class="demo-chg-bg bg-trans active" src="img/bg-img/thumbs/bg-trns.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-1.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-2.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-3.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-4.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-5.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-6.jpg" alt="Background Image">
-		        <img class="demo-chg-bg" src="img/bg-img/thumbs/bg-img-7.jpg" alt="Background Image">
-		    </div>
-		</div>-->
-		<!--===================================================-->
-
-
-
+                </div>
+            </div>
+        </div>
     </div>
-    <!--===================================================-->
-    <!-- END OF CONTAINER -->
 
-
-
-    <!--JAVASCRIPT-->
-    <!--=================================================-->
 
     <!--jQuery [ REQUIRED ]-->
     <script src="{{ URL::asset('js/jquery.min.js') }}"></script>

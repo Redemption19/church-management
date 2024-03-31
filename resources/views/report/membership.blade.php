@@ -42,7 +42,7 @@
 
         <!-- Basic Data Tables -->
         <!--===================================================-->
-        <div class="panel" style="background-color: #e8ddd3;">
+        <div class="panel" style="background-color: #fff;">
             <div class="panel-heading">
                 <h3 class="panel-title">List of Members In {{\Auth::user()->branchname}}</h3>
             </div>

@@ -217,7 +217,7 @@ function issetor(&$var, $default = false) {
         <div class="col-md-8 col-md-offset-2" style="margin-bottom:20px">
           <div class="panel" style="background-color: #e8ddd3;">
               <div class="panel-heading">
-                  <h3 class="panel-title"><strong>Total Branches Collections</strong></h3>
+                  <h3 class="panel-title"><strong>Total Branches Contribution</strong></h3>
               </div>
             <div class="panel-body">
               <table class="table text-center">

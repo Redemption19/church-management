@@ -39,7 +39,7 @@
                 <li>
                     <i class="fa fa-home"></i><a href="{{ route('dashboard') }}"> Dashboard</a>
                 </li>
-                <li class="active">All</li>
+                <li class="active">System Users</li>
             </ol>
             <!--End breadcrumb-->
         </div>
@@ -549,3 +549,4 @@
 
 {{-- the form pops up alright but before it pops i receive the sweet alert saying Oops
 Internal Server Error --}}
+

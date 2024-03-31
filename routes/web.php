@@ -1,4 +1,8 @@
 <?php
+use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Artisan;
+use App\Http\Controllers\Admin\SystemUserController;
 
 /*
 |--------------------------------------------------------------------------
@@ -12,7 +16,7 @@
 */
 
 Route::get('/', function () {
-  return view('welcome');
+    return view('welcome');
 });
 
 Route::get('/setup/user', 'VisitorController@setupUser')->name('setupUser');
@@ -24,7 +28,7 @@ Auth::routes();
 
 //Route::get('/home', 'HomeController@index')->name('home');
 
-Route::group([ 'middleware' => [ 'auth'] ], function(){
+Route::group(['middleware' => ['auth']], function () {
 
     Route::get('/dashboard', 'HomeController@index')->name('dashboard');
     Route::get('/member/register', 'MemberController@create')->name('member.register.form');
@@ -40,7 +44,6 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     Route::get('/member/analysis', 'MemberController@memberAnalysis')->name('member.analysis');
     Route::get('/member/stats', 'MemberController@memberRegStats')->name('member.reg.stats');
     Route::get('/member/attendance/{id}', 'MemberController@attendance')->name('member.attendance');
-
     Route::get('/branches', 'BranchController@index')->name('branches');
     Route::get('/branches/{id}/destroy', 'BranchController@destroy')->name('branch.destroy');
     Route::get('/branches/register', 'BranchController@registerForm')->name('branch.register.form');
@@ -111,7 +114,7 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     Route::get('/report/attendance', 'ReportController@attendance')->name('report.attendance');
     Route::get('/report/attendance/all', 'ReportController@allAttendance')->name('report.attendance.all');
     //New route from kenny
-     Route::get('/notification', 'EventController@news')->name('notification');
+    Route::get('/notification', 'EventController@news')->name('notification');
     Route::post('/readmore', 'EventController@readmore')->name('readmore');
     Route::post('/notification/announcement', 'EventController@add')->name('calendar.announcement');
     Route::get('/ticket', 'MessagingController@indexticket')->name('ticket');
@@ -119,6 +122,8 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
 
     // OPTIONS
     Route::get('/options/get', 'OptionController@getOption')->name('option.get');
+    Route::get('/branch/users/systemusers', function () {
+        return view('branch.users.systemusers'); })->name('systemusers');
     Route::get('/options/branch/get', 'OptionController@getBranchOption')->name('option.branch.get');
     Route::post('/options/branch/put', 'OptionController@putBranchOption')->name('option.branch.post');
     Route::get('/branches/options', 'BranchController@options')->name('branch.options');
@@ -140,6 +145,11 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     Route::get('/payment/callback', 'PaymentController@handleGatewayCallback');
     Route::get('/payment/status', 'PaymentController@status');
 
+    // SYSTEM USERS - ADMIN AREA
+    Route::group(['middleware' => ['auth'], 'prefix' => 'admin'], function () {
+        Route::get('/branches/users/systemusers', [SystemUserController::class, 'show'])->name('admin.systemusers');
+    });
+
     // test
     Route::get('/currencies/get', 'OptionController@getCurrencies')->name('option.currencies');
     Route::get('/countries/get', 'OptionController@getCountries')->name('option.countries');
@@ -154,9 +164,9 @@ Route::group([ 'middleware' => [ 'auth'] ], function(){
     Route::get('/map', 'MapController@index')->name('map');
 
     Route::get('/view/branch', function () {
-      return view('branch');
-  })->name('all.blade.php');
-  
+        return view('branch');
+    })->name('all.blade.php');
+
 
 
 });
@@ -166,62 +176,63 @@ Route::get('/admin/login', function () {
 });
 
 //shared server clear cache
-Route::get('/clear-cache', function() {
+Route::get('/clear-cache', function () {
     return Artisan::call('cache:clear');
     // return what you want
 });
 
 // migrate db
-Route::get('/db/migrate', function() {
+Route::get('/db/migrate', function () {
     return Artisan::call('migrate');
 });
 
-Route::get('/db/migrate/fresh', function() {
-  return Artisan::call('migrate:fresh');
+Route::get('/db/migrate/fresh', function () {
+    return Artisan::call('migrate:fresh');
 });
 
 
 //Route::get('/registerr', function () {
-    //return view('auth.register');
+//return view('auth.register');
 //});
 Route::get('/recover', 'Auth\RecoverPasswordController@index')->name('recover');
 use Faker\Generator as Faker;
 
-Route::get('/test', function(){
-//   name: commission_account_bank
+Route::get('/test', function () {
+    //   name: commission_account_bank
 //   value: Guaranty Trust Bank
-  // dd(Paystack::fetchSubAccount('ACCT_j8lho5oa7elp4pr'));
-  // dd(Paystack::listSubAccounts(500,1));
-  // if ($option = Options::getOneBranchOption($request->name, $branch)) {
-  //   if (in_array($request->name, ['commission_account_bank', 'commission_account_name', 'commission_account_number'])) {
-  //     $acounts = (Paystack::listSubAccounts(500,1))['data'];
-  //     // code...
-  //   }
-  //   // code...
-  //   $option->name = $request->name;
-  //   $option->value = $request->value;
-  //   $option->save();
-  //   return $option;
-  // }
-  // // create part
-  // return Options::create([
-  //   'branch_id' => $branch->id,
-  //   'name' => $request->name,
-  //   'value' => $request->value
-  // ]);
-  // return response()->json($currencies);
-  $faker = new Faker();
-  dd($faker);
-  function fakeDate ($faker){
-    // check unique date
-    $date = $faker->dateTimeBetween(['2015-01-01', '2019-05-27'])->format('d-m-Y');
-    $unique = App\Attendance::where('branch_id', 1)->where('attendance_date', $date)->first();
-    if ($unique) {
-      $date = fakeDate($faker);
+    // dd(Paystack::fetchSubAccount('ACCT_j8lho5oa7elp4pr'));
+    // dd(Paystack::listSubAccounts(500,1));
+    // if ($option = Options::getOneBranchOption($request->name, $branch)) {
+    //   if (in_array($request->name, ['commission_account_bank', 'commission_account_name', 'commission_account_number'])) {
+    //     $acounts = (Paystack::listSubAccounts(500,1))['data'];
+    //     // code...
+    //   }
+    //   // code...
+    //   $option->name = $request->name;
+    //   $option->value = $request->value;
+    //   $option->save();
+    //   return $option;
+    // }
+    // // create part
+    // return Options::create([
+    //   'branch_id' => $branch->id,
+    //   'name' => $request->name,
+    //   'value' => $request->value
+    // ]);
+    // return response()->json($currencies);
+    $faker = new Faker();
+    dd($faker);
+    function fakeDate($faker)
+    {
+        // check unique date
+        $date = $faker->dateTimeBetween(['2015-01-01', '2019-05-27'])->format('d-m-Y');
+        $unique = App\Attendance::where('branch_id', 1)->where('attendance_date', $date)->first();
+        if ($unique) {
+            $date = fakeDate($faker);
+        }
+        return $date;
     }
-    return $date;
-  }
-  echo fakeDate($faker);
+    echo fakeDate($faker);
 })->name('test');
 
 Route::get('/users', 'BranchController@users')->name('users');
@@ -231,3 +242,5 @@ Route::post('/recover', 'Auth\RecoverPasswordController@recover');
 // Route::get('/password/reset/{token}', 'Auth\RecoverPasswordController@reset')->name('password.reset');
 // Route::post('/password/reset/{token}', 'Auth\RecoverPasswordController@reset')->name('password.reset');
 Route::post('/recover/{selector}/{token}', 'Auth\RecoverPasswordController@reset')->name('recover.reset');
+Route::get('/branches', 'BranchController@index')->name('branches.index');
+Route::get('/branches', 'BranchController@index')->name('branches');

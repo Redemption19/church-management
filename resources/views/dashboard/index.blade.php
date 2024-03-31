@@ -53,7 +53,7 @@ $colors = colo();//$generateColor($c_types);
         <div class="small-box bg-info">
             <div class="inner">
                 <h3 class="church-details">{{\App\User::all()->count()}}</h3>
-                <p>Total Churches</p>
+                <p>Total Branches</p>
             </div>
             <div class="icon">
             <i class="fas fa-church"></i>
@@ -119,7 +119,6 @@ $colors = colo();//$generateColor($c_types);
   </div>
 
   <div class="panel">
-
       <!--Chart information-->
       <div class="panel-body">
           <div class="row mar-top">
@@ -150,7 +149,7 @@ $colors = colo();//$generateColor($c_types);
                   </div>
               </div>
               <div class="col-md-8">
-                  <div id="users-chart" style="height:230px"></div>
+                  <div id="users-chart" style="height:400px"></div>
               </div>
           </div>
       </div>
@@ -196,8 +195,8 @@ $colors = colo();//$generateColor($c_types);
                   <div class="col-xs-{{$isAdmin ? '4' : '6'}}">
                     <label for="show" class="">Show</label>
                     <select id="show" required style="outline:none;" name="sort" class="selectpicker col-md-12" data-style="btn-primary">
-                      <option selected value="false">This Parish</option>
-                      <option value="true">All Parishes</option>
+                      <option selected value="false">This Branch</option>
+                      <option value="true">All Branches</option>
                     </select>
                   </div>
                   @endif
@@ -627,12 +626,9 @@ $colors = colo();//$generateColor($c_types);
     </div>
 
   </div>
-
-
 </div>
     <!--===================================================-->
     <!--End page content-->
-
 </div>
 @endsection
 

@@ -14,8 +14,8 @@
 @section('content')
 <?php
 $dataPoints = array(
-array("label"=> "No", "y"=> $attendance->no, 'color' => 'red'),
-array("label"=> "Yes", "y"=> $attendance->yes, 'color' => 'green'),
+array("label"=> "No", "y"=> $attendance->no, 'color' => '#f2003c'),
+array("label"=> "Yes", "y"=> $attendance->yes, 'color' => '#2d8caf'),
 );
 ?>
 
